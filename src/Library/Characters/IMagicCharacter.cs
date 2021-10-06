@@ -6,4 +6,5 @@ namespace RoleplayGame
 
         void RemoveItem(IMagicalItem item);
     }
+    
 }
