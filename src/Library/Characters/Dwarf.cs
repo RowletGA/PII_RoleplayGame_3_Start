@@ -1,17 +1,15 @@
 using System.Collections.Generic;
 namespace RoleplayGame
 {
-    public class Dwarf: ICharacter
+    public class Dwarf : Personaje
     {
-        private int health = 100;
-
-        private List<IItem> items = new List<IItem>();
-
-        public Dwarf(string name)
+    
+        public Dwarf(string name):base(name)
         {
             this.Name = name;
             
             this.AddItem(new Axe());
             this.AddItem(new Helmet());
         }
-}   }
+   }
+}
