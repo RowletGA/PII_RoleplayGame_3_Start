@@ -1,20 +1,24 @@
 using System.Collections.Generic;
 namespace RoleplayGame
 { 
-    public abstract class Personaje : ICharacter
+    
+    public abstract class MagicCharacter: IMagicCharacter
     {
-        private int health = 100;
+        protected int health = 100;
 
         protected List<IItem> items = new List<IItem>();
-        
-        protected Personaje(string name)
+
+        protected List<IMagicalItem> magicalItems = new List<IMagicalItem>();
+
+         Protected MagicCharacter(string name)
         {
             this.Name = name;
+            
+            this.AddItem(new Staff());
         }
-
-        public string Name {get;set;}
-
-        public virtual int AttackValue
+           public string Name { get; set; }
+        
+        public int AttackValue
         {
             get
             {
@@ -26,11 +30,18 @@ namespace RoleplayGame
                         value += (item as IAttackItem).AttackValue;
                     }
                 }
-                
+                foreach (IMagicalItem item in this.magicalItems)
+                {
+                    if (item is IMagicalAttackItem)
+                    {
+                        value += (item as IMagicalAttackItem).AttackValue;
+                    }
+                }
                 return value;
             }
         }
-        public virtual int DefenseValue
+
+        public int DefenseValue
         {
             get
             {
@@ -42,11 +53,19 @@ namespace RoleplayGame
                         value += (item as IDefenseItem).DefenseValue;
                     }
                 }
+                foreach (IMagicalItem item in this.magicalItems)
+                {
+                    if (item is IMagicalDefenseItem)
+                    {
+                        value += (item as IMagicalDefenseItem).DefenseValue;
+                    }
+                }
                 return value;
             }
         }
-        public int health 
-        { 
+
+        public int Health
+        {
             get
             {
                 return this.health;
@@ -55,8 +74,8 @@ namespace RoleplayGame
             {
                 this.health = value < 0 ? 0 : value;
             }
-
         }
+
         public void ReceiveAttack(int power)
         {
             if (this.DefenseValue < power)
@@ -64,21 +83,33 @@ namespace RoleplayGame
                 this.Health -= power - this.DefenseValue;
             }
         }
-       
+
         public void Cure()
         {
             this.Health = 100;
         }
-       
+
         public void AddItem(IItem item)
         {
             this.items.Add(item);
         }
-        
+
         public void RemoveItem(IItem item)
         {
             this.items.Remove(item);
         }
-    }
 
+        public void AddItem(IMagicalItem item)
+        {
+            this.magicalItems.Add(item);
+        }
+
+        public void RemoveItem(IMagicalItem item)
+        {
+            this.magicalItems.Remove(item);
+        }
+
+    }
 }
+
+
