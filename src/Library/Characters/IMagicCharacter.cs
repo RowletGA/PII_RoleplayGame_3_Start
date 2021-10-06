@@ -1,9 +1,10 @@
 namespace RoleplayGame
 {
-    public interface IMagicCharacter 
+    public interface IMagicCharacter: ICharacter
     {
         void AddItem(IMagicalItem item);
 
         void RemoveItem(IMagicalItem item);
     }
+    
 }
